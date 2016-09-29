@@ -1,6 +1,6 @@
 FROM rhel7
 USER root
-RUN yum -y update && yum -y install curl nc && yum clean all
+RUN yum -y update && yum -y install curl nc tar && yum clean all
 RUN mkdir -p /mattermost/data
 
 RUN curl https://releases.mattermost.com/3.4.0/mattermost-team-3.4.0-linux-amd64.tar.gz | tar -xvz
