@@ -1,15 +1,17 @@
 FROM rhel
-
+USER root
 RUN yum update && yum -y install curl nc && yum clean all
 RUN mkdir -p /mattermost/data
 
 RUN curl https://releases.mattermost.com/3.4.0/mattermost-team-3.4.0-linux-amd64.tar.gz | tar -xvz
 
-RUN rm /mattermost/config/config.json
+RUN rm /mattermost/config/config.json && chmod 777 /mattermost/config
 COPY config.template.json /
 
 COPY docker-entry.sh /
 RUN chmod +x /docker-entry.sh
 ENTRYPOINT ["/docker-entry.sh"]
+
+USER 1001
 
 EXPOSE 80
