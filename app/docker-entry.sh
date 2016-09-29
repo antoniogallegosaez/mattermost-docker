@@ -20,7 +20,7 @@ else
 fi
 
 echo "Wait until database $DB_HOST:$DB_PORT_5432_TCP_PORT is ready..."
-until nc -z $DB_HOST $DB_PORT_5432_TCP_PORT
+until nmap -Pn -p$DB_PORT_5432_TCP_PORT $DB_HOST | awk "\$1 - /$DB_PORT_5432_TCP_PORT/ {print \$2}" | grep open
 do
     sleep 1
 done
